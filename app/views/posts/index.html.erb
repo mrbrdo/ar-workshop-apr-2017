@@ -1,0 +1,22 @@
+<h1>Posts</h1>
+
+<hr>
+
+<div>
+  <%= render partial: "filter" %>
+</div>
+
+<hr>
+
+<% @posts.each do |post| %>
+  <div>
+    <h2><%= post.title %></h2>
+    <div>
+      <small><%= post.published_at %></small> |
+      <small><%= post.category.title %></small>
+    </div>
+    <div>
+      <%= link_to "Show", post_path(post.slug) %>
+    </div>
+  </div>
+<% end %>

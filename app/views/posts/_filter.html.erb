@@ -1,0 +1,49 @@
+<%= form_tag posts_path, method: :get do %>
+  <%= hidden_field_tag 'filter', 'on' %>
+  <div>
+    <h3>Categories</h3>
+    <ul>
+      <% Category.all.each do |category| %>
+        <li>
+          <label>
+            <%= check_box_tag 'category_ids[]', category.id, Array(params[:category_ids]).include?(category.id.to_s) %>
+            <%= category.title %>
+          </label>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+  <div>
+    <h3>Published</h3>
+      <label>
+        <%= check_box_tag 'published', '1', params[:filter] == 'on' ? params[:published].present? : true %>
+        Only show published posts
+      </label>
+  </div>
+  <div>
+    <h3>Published after</h3>
+    <%= datetime_field_tag 'published_after', params[:published_after] %>
+  </div>
+  <div>
+    <h3>Published before</h3>
+    <%= datetime_field_tag 'published_before', params[:published_before] %>
+  </div>
+  <div>
+    <h3>Title includes text</h3>
+    <%= text_field_tag 'title', params[:title] %>
+  </div>
+
+  <div>
+    <h3>Order by</h3>
+    <%= select_tag "order_by", options_for_select(["Title", "Published Time", "Category Title"], params[:order_by])  %>
+  </div>
+
+  <div>
+    <h3>Order direction</h3>
+    <%= select_tag "order_dir", options_for_select(["asc", "desc"], params[:order_dir])  %>
+  </div>
+
+  <div>
+    <%= submit_tag 'Filter' %>
+  </div>
+<% end %>
